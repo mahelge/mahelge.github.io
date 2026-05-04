@@ -1,1 +1,287 @@
-<h1>Megan Helge</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Megan A. Helge</title>
+    <style>
+        /* Black, White, Gold Color Palette */
+        :root {
+            --black: #000000;
+            --charcoal: #1a1a1a;
+            --white: #ffffff;
+            --off-white: #fafafa;
+            --gold: #d4af37;
+            --gold-dark: #b8941f;
+            --gold-light: #e8d090;
+            --gray: #4a4a4a;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        header, .main-content, .links-section, .projects-section {
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding: 3rem 2rem 2.5rem;
+            background: var(--off-white);
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            border-top: 3px solid var(--gold);
+        }
+        h1 {
+            font-size: 3rem;
+            font-weight: 400;
+            margin-bottom: 0.75rem;
+            color: var(--black);
+            letter-spacing: 1px;
+        }
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--gold-dark);
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+        .tagline {
+            font-size: 1rem;
+            color: var(--gray);
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 300;
+        }
+        .main-content {
+            background: var(--off-white);
+            border-radius: 2px;
+            padding: 2rem 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            border-top: 3px solid var(--gold);
+        }
+        .bio {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            text-align: justify;
+            color: var(--gray);
+        }
+        .links-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .link-card {
+            background: var(--white);
+            border-radius: 2px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: left;
+        }
+        .link-card:hover::before {
+            transform: scaleX(1);
+        }
+        .link-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+            border-color: var(--gold);
+        }
+        .link-card h3 {
+            color: var(--black);
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-family: 'Segoe UI', sans-serif;
+            transition: color 0.3s ease;
+        }
+        .link-card:hover h3 {
+            color: var(--gold-dark);
+        }
+        .link-card p {
+            color: #666;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .projects-section {
+            background: var(--off-white);
+            border-radius: 2px;
+            padding: 2.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            border-top: 3px solid var(--gold);
+        }
+        .projects-section h2 {
+            color: var(--black);
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        .project-link {
+            display: block;
+            background: var(--white);
+            border-radius: 2px;
+            padding: 2rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            border-left: 4px solid var(--gold);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+        }
+        .project-link:last-child {
+            margin-bottom: 0;
+        }
+        .project-link:hover {
+            transform: translateX(8px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+            border-left-color: var(--gold-dark);
+        }
+        .project-link h3 {
+            color: var(--black);
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            font-family: 'Segoe UI', sans-serif;
+            transition: color 0.3s ease;
+        }
+        .project-link:hover h3 {
+            color: var(--gold-dark);
+        }
+        .project-link p {
+            color: var(--gray);
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 0.85rem;
+            margin-top: 3rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.25rem;
+            }
+            .container {
+                padding: 2rem 1rem;
+            }
+            .main-content, .projects-section {
+                padding: 1.5rem;
+            }
+            .links-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Subtle animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .container > * {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        header { animation-delay: 0s; }
+        .main-content { animation-delay: 0.1s; }
+        .links-section { animation-delay: 0.2s; }
+        .projects-section { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Megan A. Helge</h1>
+            <p class="subtitle">GIS Programming Technician</p>
+        </header>
+        <div class="main-content">
+            <div class="bio">
+                <p>I am a Vector Ecologist trained in Medical Geography and Global Health Epidemiology. I investigate how environmental conditions shape vector ecologies, and how that can be related to public health and spatial patterns of risk. My research integrates geography, community ecology, and public health to understand how complex factors like climate change influence mosquito and tick ecology.</p>
+            </div>
+        </div>
+        <div class="links-section">
+            <a href="https://ianpsheasmith.github.io/CV.html" target="_blank" rel="noopener noreferrer" class="link-card">
+                <h3>Curriculum Vitae</h3>
+            </a>
+            <a href="https://www.linkedin.com/in/megan-helge-8692a0302/" target="_blank" rel="noopener noreferrer" class="link-card">
+                <h3>LinkedIn</h3>
+            </a>
+        </div>
+          <div class="projects-section">
+              <h2>Research Projects</h2>
+              <a href="https://ianpsheasmith.github.io/Haiti_MosqAbundanceStudy/" target="_blank" rel="noopener noreferrer" class="project-link">
+                  <h3>Monthly Abundance Maps of Vector Mosquitoes in Haiti</h3>
+                  <p>Interactive spatiotemporal modeling of six mosquito vector species across Haiti.</p>
+              </a>
+              <a href="https://ianpsheasmith.github.io/HaitiAeaeENM/" target="_blank" rel="noopener noreferrer" class="project-link">
+                  <h3>Modeling the Distribution of <em>Aedes aegypti</em> in Haiti under Climate Change</h3>
+                  <p>Predicting population risks of exposure to <em>Aedes aegypti</em> in Haiti using risk dashboards and predictions under four warming regimes.</p>
+              </a>
+              <a href="Assemblage/" target="_blank" rel="noopener noreferrer" class="project-link">
+                  <h3>A Vulnerabilising Assemblage in the Context of Infectious Disease in Haiti</h3>
+                  <p>Characterising Climate Change, Colonisation, Conflict & Corruption as a Vulnerabilising Assemblage in the Context of Infectious Disease in Haiti.</p>
+              </a>
+              <a href="Keratitis/" target="_blank" rel="noopener noreferrer" class="project-link">
+                  <h3>Keratitis & Corneal Disease</h3>
+                  <p>Describing corneal donation and keratitis through a literature review and through geospatial modelling.</p>
+              </a>
+          </div>
+        <footer>
+            <p>ianpsheasmith@ufl.edu | ismithgh@umich.edu</p>
+            <p>github.com/IanPsheaSmith</p>            
+        </footer>
+    </div>
+    <!-- Parallax Scroll Effect -->
+    <script>
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const header = document.querySelector('header');
+        const mainContent = document.querySelector('.main-content');
+        const linksSection = document.querySelector('.links-section');
+        const projectsSection = document.querySelector('.projects-section');
+        if (header) header.style.transform = `translateY(${scrolled * 0.4}px)`;
+        if (mainContent) mainContent.style.transform = `translateY(${scrolled * 0.25}px)`;
+        if (linksSection) linksSection.style.transform = `translateY(${scrolled * 0.15}px)`;
+        if (projectsSection) projectsSection.style.transform = `translateY(${scrolled * 0.1}px)`;
+    });
+    </script>
+</body>
+</html>
