@@ -1,243 +1,833 @@
 <!DOCTYPE html>
-<html>
-
-  {% include head.html %}
-
-  <body class="theme-{% if site.resume_theme %}{{ site.resume_theme }}{% endif %}">
-
-    <div class="wrapper" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="telephone" content="{{ site.resume_contact_telephone }}"/>
-      <meta itemprop="address" content="{{ site.resume_contact_address }}"/>
-
-      <header class="page-header">
-
-        <!-- You can turn off the avatar in _config.yml by setting to false -->
-        {% if site.resume_avatar == 'true' %}
-        <img src="images/avatar.jpg" alt="my photo" class="avatar no-print" itemprop="image">
-        {% endif %}
-
-        <!-- Your name is defined in the _config.yml file -->
-        <h1 class="header-name" itemprop="name">{{ site.resume_name }}</h1>
-
-        <!-- To display contact info here, change `display_header_contact_info` value in _config.yml to true -->
-        {% if site.display_header_contact_info == 'true' %}
-        <div class="header-contact-info">
-          <p>{{ site.resume_header_contact_info }}</p>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ian Pshea-Smith - CV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 60px;
+        }
+        /* Header Styles */
+        h1 {
+            color: #5B2C6F;
+            font-size: 36px;
+            letter-spacing: 8px;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: normal;
+        }
+        .subtitle {
+            color: #6B4C7A;
+            text-align: center;
+            font-size: 14px;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            font-weight: normal;
+        }
+        .contact-info {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #5B2C6F;
+            padding-bottom: 15px;
+        }
+        .contact-info a {
+            color: #5B2C6F;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        /* Section Headers */
+        h2 {
+            color: #5B2C6F;
+            font-size: 16px;
+            letter-spacing: 3px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #5B2C6F;
+            padding-bottom: 5px;
+            font-weight: normal;
+        }
+        h3 {
+            color: #333;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+        /* Education and Experience Entries */
+        .entry {
+            margin-bottom: 18px;
+        }
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 5px;
+        }
+        .entry-title {
+            color: #333;
+            font-size: 14px;
+        }
+        .entry-title-bold {
+            color: #333;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .entry-date {
+            color: #666;
+            font-size: 13px;
+            text-align: right;
+        }
+        .entry-institution {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+        .entry-details {
+            margin-top: 5px;
+            font-size: 13px;
+            color: #444;
+        }
+        .entry-details ul {
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+        .entry-details li {
+            margin-bottom: 3px;
+        }
+        .awards {
+            color: #666;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        .awards-label {
+            text-decoration: underline;
+        }
+        .projects {
+            color: #666;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        .projects-label {
+            text-decoration: underline;
+        }
+        /* Publications and Presentations */
+        .publication-item {
+            margin-bottom: 12px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .publication-item strong {
+            color: #333;
+        }
+        .publication-status {
+            color: #666;
+            display: block;
+            margin-top: 2px;
+        }
+        .presentation-venue {
+            display: block;
+            margin-left: 20px;
+            color: #666;
+        }
+        /* Teaching Experience Subsections */
+        .teaching-subsection {
+            margin-left: 30px;
+            margin-top: 8px;
+            margin-bottom: 12px;
+        }
+        .teaching-subsection-title {
+            font-weight: bold;
+            color: #333;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+        .teaching-subsection ul {
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+        .teaching-subsection li {
+            margin-bottom: 3px;
+        }
+        /* Skills and Interests */
+        .skills-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .skills-column {
+            width: 48%;
+        }
+        .skills-column h2 {
+            margin-top: 15px;
+        }
+        .skills-column h3 {
+            color: #5B2C6F;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+        .skills-list {
+            font-size: 13px;
+        }
+        .skills-list li {
+            margin-bottom: 5px;
+            list-style-position: inside;
+        }
+        .skill-category {
+            font-weight: normal;
+            color: #333;
+        }
+        /* Page Break for Print */
+        @media print {
+            .page-break {
+                page-break-before: always;
+            }
+            body {
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 40px;
+            }
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+            }
+            h1 {
+                font-size: 28px;
+                letter-spacing: 4px;
+            }
+            .download-section {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            .download-button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            .skills-container {
+                flex-direction: column;
+            }
+            .skills-column {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .entry-header {
+                flex-direction: column;
+            }
+            .entry-date {
+                text-align: left;
+                margin-top: 5px;
+            }
+        }
+        /* Download PDF Section */
+        .download-section {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-out;
+        }
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            color: #5B2C6F;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Georgia', serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(91, 44, 111, 0.3);
+            background: #f9f9f9;
+        }
+        .download-button svg {
+            transition: transform 0.3s ease;
+        }
+        .download-button:hover svg {
+            transform: translateY(2px);
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* ── BACK LINK ── */
+        .back-link {
+            text-align: center;
+            padding: 2.5rem 0 3.5rem;
+        }
+        .back-link a {
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--teal);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2px;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .back-link a:hover {
+            color: var(--teal-deep);
+            border-color: var(--teal);
+        }        
+        /* Hide download button when printing/converting to PDF */
+        @media print {
+          .download-button,
+          button,
+          a[href*="pdf" i] {
+            display: none !important;
+          }
+        }
+        .numbered-section {
+            counter-reset: section-counter;
+        }
+        .numbered-section .publication-item {
+            counter-increment: section-counter;
+            padding-left: 28px;
+            position: relative;
+        }
+        .numbered-section .publication-item::before {
+            content: counter(section-counter) ".";
+            position: absolute;
+            left: 0;
+            color: #666;
+            font-size: 13px;
+        }
+        .pub-subheading {
+            color: #6B4C7A;
+            font-size: 13px;
+            font-weight: normal;
+            font-style: italic;
+            letter-spacing: 1px;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+        <!-- Download PDF Section -->
+        <div class="download-section">
+            <a href="https://ianpsheasmith.github.io/IAPS_CV.pdf" download="Ian_Pshea_Smith_CV.pdf" class="download-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download CV as PDF
+            </a>
         </div>
-        {% endif %}
-
-        <div class="title-bar no-print">
-
-          <!-- Your title is also defined in the _config.yml file -->
-          <h2 class="header-title" itemprop="jobTitle">{{ site.resume_title }}</h2>
-
-          <!-- This is the markup for the icon links; moved out to an include because it's very verbose, and you shouldn't ever need to edit the markup (unless you want to re-order the icons); if you want to customize which links appear, define them in the _config.yml file -->
-          {% include icon-links.html %}
+    <div class="container">
+        <!-- Header -->
+        <h1>IAN PSHEA-SMITH, Ph.D., MPH</h1>
+        <p class="subtitle">MEDICAL GEOGRAPHER & GLOBAL HEALTH EPIDEMIOLOGIST</p>
+        <div class="contact-info">
+            <a href="mailto:IanPsheaSmith@ufl.edu">IanPsheaSmith@ufl.edu</a>
+            <span>|</span>
+            <a href="tel:+15176777930">+1.517.677.7930</a>
+            <span>|</span>
+            <a href="https://ianpsheasmith.github.io/" target="_blank">ianpsheasmith.github.io</a>
         </div>
-
-        <div class="executive-summary" itemprop="description">
-          {{ site.resume_header_intro }}
+        <!-- Education -->
+        <h2>EDUCATION</h2>
+        <div class="entry">
+            <div class="entry-header">
+                <div class="entry-title">Ph.D., Medical Geography and Global Health</div>
+            </div>
+            <div class="entry-institution">University of Florida, Gainesville, Florida</div>
+            <div class="awards"><span class="awards-label">Awards:</span> Verena Lighthouse Scholar, Evan Coe Medical Geography Awards (Travel & Excellence), Distinguished Teaching Award, two oral presentation awards & one poster presentation award</div>
+            <div class="projects"><span class="projects-label">Dissertation:</span> Modeling Vector Ecologies Using Frameworks from Geography, Community Ecology, and Public Health</div>
         </div>
-
-        {% if site.resume_looking_for_work == 'yes' %}
-        <a href="mailto:{{ site.resume_contact_email }}" class="contact-button no-print" itemprop="email">Contact me</a>
-        {% elsif site.resume_looking_for_work == 'no' %}
-        <a class="contact-button not-looking no-print">I'm not looking for work right now.</a>
-        {% else %}
-        {% endif %}
-
-      </header>
-
-      {% if site.resume_section_experience %}
-      <!-- begin Experience -->
-      <section class="content-section">
-
-        <header class="section-header">
-          <h2>Experience</h2>
-        </header>
-
-        {% for job in site.data.experience %}
-        <div class="resume-item" itemscope itemprop="worksFor" itemtype="http://schema.org/Organization">
-          <h3 class="resume-item-title" itemprop="name">{{ job.company }}</h3>
-          <h4 class="resume-item-details" itemprop="description">{{ job.position }} &bull; {{ job.duration }}</h4>
-          <p class="resume-item-copy">{{ job.summary }}</p>
-        </div><!-- end of resume-item -->
-        {% endfor %}
-
-      </section>
-      <!-- end Experience -->
-      {% endif %}
-
-
-      {% if site.resume_section_education %}
-      <!-- begin Education -->
-      <section class="content-section">
-        <header class="section-header">
-          <h2>Education</h2>
-        </header>
-
-        {% for education in site.data.education %}
-        <div class="resume-item" itemscope itemprop="alumniOf" itemtype="http://schema.org/CollegeOrUniversity">
-          <h3 class="resume-item-title" itemprop="name">{{ education.uni }}</h3>
-          <h4 class="resume-item-details group" itemprop="description">{{ education.degree }} &bull; {{ education.year }}</h4>
-          <h5 class="resume-item-details award-title" itemprop="description">{{ education.award }}</h5>
-          <p class="resume-item-copy" itemprop="description">
-            <ul class="resume-item-list">
-              {% for award in education.awards %}
-              <li>{{ award.award }}</li>
-              {% endfor %}
-            </ul>
-
-
-          <p class="resume-item-copy">{{ education.summary }}</p>
+        <div class="entry">
+            <div class="entry-header">
+                <div class="entry-title">MPH, Global Health Epidemiology</div>
+            </div>
+            <div class="entry-institution">University of Michigan, Ann Arbor, Michigan</div>
+            <div class="awards"><span class="awards-label">Awards:</span> Latin American and Caribbean Studies Tinker Fellow, Global Public Health Research Award Recipient, Outstanding Commitment to Public Health Practice</div>
+            <div class="projects"><span class="projects-label">Projects:</span> Mosquito landing behavior in northern Ecuador, Infection prevention in Grenada's Homes for the Aging, Key informant perspectives on long-COVID in San Antonio, Texas</div>
         </div>
-        {% endfor %}
-      </section>
-      <!-- end Education -->
-      {% endif %}
-
-
-      {% if site.resume_section_projects %}
-      <!-- begin Projects -->
-      <section class="content-section">
-        <header class="section-header">
-          <h2>Projects</h2>
-        </header>
-
-        {% for project in site.data.projects %}
-        <div class="resume-item" itemscope itemtype="http://schema.org/CreativeWork">
-          <meta itemprop="creator" content="{{ site.resume_name }}" itemtype="http://schema.org/Person" />
-          <h3 class="resume-item-title" itemprop="name">{% if project.url %}<a href="{{ project.url }}" itemprop="url">{{ project.project }}</a>{% else %}{{ project.project }}{% endif %}</h3>
-          <h4 class="resume-item-details" itemprop="description">{{ project.role }}  &bull; {{ project.duration }}</h4>
-          <p class="resume-item-copy">{{ project.description }}</p>
+        <div class="entry">
+            <div class="entry-header">
+                <div class="entry-title">BSc, International Health | Minors in Biology & Spanish</div>
+            </div>
+            <div class="entry-institution">Bethel University, Mishawaka, Indiana</div>
+            <div class="awards"><span class="awards-label">Awards:</span> Scholar Athlete in Track & Field, Outstanding Major in International Health</div>
+            <div class="projects"><span class="projects-label">Projects:</span> Narrative review of zoonotic malaria in South East Asia, Segregation distortion in <i>Drosophila melanogaster</i></div>
         </div>
-        {% endfor %}
-
-      </section>
-      <!-- end Projects -->
-      {% endif %}
-
-      {% if site.resume_section_skills %}
-      <!-- begin Skills -->
-      <section class="content-section">
-
-        <header class="section-header">
-          <h2>Skills</h2>
-        </header>
-        {% for skill in site.data.skills %}
-        <div class="resume-item">
-          <h4 class="resume-item-details">{{ skill.skill }}</h4>
-          <p class="resume-item-copy">{{ skill.description }}</p>
+        <!-- Research Experience -->
+        <h2>RESEARCH EXPERIENCE</h2>
+        <div class="entry">
+            <div class="entry-header">
+                <div class="entry-title-bold">Graduate Research & Teaching Assistant</div>
+                <div class="entry-date">September 2023 - Present</div>
+            </div>
+            <div class="entry-institution">University of Florida Department of Geography, Gainesville, Florida</div>
+            <div class="entry-details">
+                <ul>
+                    <li>Conducted research relating to mosquito ecology and zoonotic disease using machine learning and traditional regression approaches</li>
+                    <li>Constructed and submitted proposals, manuscripts and conference presentations</li>
+                    <li>Led coursework on medical geography and served as a grader for interdisciplinary courses</li>
+                </ul>
+            </div>
         </div>
-        {% endfor %}
-
-      </section>
-      <!-- end Skills -->
-      {% endif %}
-
-      {% if site.resume_section_recognition %}
-      <!-- begin Recognition -->
-      <section class="content-section">
-
-        <header class="section-header">
-          <h2>Recognition</h2>
-        </header>
-
-        {% for recognition in site.data.recognitions %}
-        <div class="resume-item">
-          <h3 class="resume-item-title" itemprop="award">{{ recognition.award }}</h3>
-          <h4 class="resume-item-details">{{ recognition.organization }} &bull; {{ recognition.year }}</h4>
-          <p class="resume-item-copy">{{ recognition.summary }}</p>
+        <div class="entry">
+            <div class="entry-header">
+                <div class="entry-title-bold">Research Assistant II</div>
+                <div class="entry-date">April, 2023 - Present</div>
+            </div>
+            <div class="entry-institution">University of Michigan Department of Epidemiology, Ann Arbor, Michigan</div>
+            <div class="entry-details">
+                <ul>
+                    <li>Conducted data analysis (R, SAS) for multiple studies on mosquito behavior patterns in northern Ecuador</li>
+                    <li>Applied modeling techniques and epidemiological theory</li>
+                    <li>Presented findings at research meetings and drafted results for publication</li>
+                </ul>
+            </div>
         </div>
-        {% endfor %}
-
-      </section>
-      <!-- end Recognition -->
-      {% endif %}
-
-      {% if site.resume_section_associations %}
-      <!-- begin Associations -->
-      <section class="content-section">
-
-        <header class="section-header">
-          <h2>Associations</h2>
-        </header>
-
-        {% for association in site.data.associations %}
-        <div class="resume-item" itemscope itemprop="memberOf" itemtype="http://schema.org/Organization">
-          <h3 class="resume-item-title" itemprop="name">{% if association.url %}<a href="{{ association.url }}">{{ association.organization }}</a>{% else %}{{ association.organization }}{% endif %}</h3>
-          <h4 class="resume-item-details" itemprop="description">{{ association.role }} &bull; {{ association.year }}</h4>
-          <p class="resume-item-copy">{{ association.summary }}</p>
+        <div class="entry">
+            <div class="entry-header">
+                <div class="entry-title-bold">Global Health Intern</div>
+                <div class="entry-date">May 2023 - August 2023</div>
+            </div>
+            <div class="entry-institution">Eversight Vision, Ann Arbor, Michigan</div>
+            <div class="entry-details">
+                <ul>
+                    <li>Conducted a meta analysis of global attitudes towards corneal donation</li>
+                    <li>Analyzed data using Microsoft Excel and R</li>
+                    <li>Drafted results for publication and presentation, coordinating authorship and submission</li>
+                </ul>
+            </div>
         </div>
-        {% endfor %}
-
-      </section>
-      <!-- end Associations -->
-      {% endif %}
-
-      {% if site.resume_section_interests %}
-      <!-- begin Interests -->
-      <section class="content-section">
-
-        <header class="section-header">
-          <h2>Outside Interests</h2>
-        </header>
-
-        <div class="resume-item">
-          <ul class="resume-item-list">
-            {% for interest in site.data.interests %}
-            <li>{{ interest.description }}</li>
-            {% endfor %}
-          </ul>
+        <div class="entry">
+            <div class="entry-header">
+                <div class="entry-title-bold">Research Assistant I</div>
+                <div class="entry-date">September 2021 - April 2022</div>
+            </div>
+            <div class="entry-institution">University of Michigan Department of Health Behavior, Ann Arbor, Michigan</div>
+            <div class="entry-details">
+                <ul>
+                    <li>Processed data relating to a parent-focused behavioral intervention on childhood obesity</li>
+                    <li>Coded & processed qualitative data using SPSS & Dedoose</li>
+                    <li>Participated in IRB & HIPAA compliance and trainings</li>
+                </ul>
+            </div>
         </div>
-
-      </section>
-      <!-- end Interests -->
-      {% endif %}
-
-      {% if site.resume_section_links %}
-      <!-- begin Links -->
-      <section class="content-section">
-
-        <header class="section-header">
-          <h2>Additional Links</h2>
-        </header>
-
-        <div class="resume-item">
-          <ul class="resume-item-list">
-            {% for link in site.data.links %}
-            <li><a href={{ link.url }} itemprop="url">{{ link.description }}</a></li>
-            {% endfor %}
-          </ul>
+        <div class="entry">
+            <div class="entry-header">
+                <div class="entry-title-bold">Science Laboratory Assistant</div>
+                <div class="entry-date">January 2020 - May 2021</div>
+            </div>
+            <div class="entry-institution">Bethel University, Mishawaka, Indiana</div>
+            <div class="entry-details">
+                <ul>
+                    <li>Conducted molecular genetics research on segregation distortion in <i>Drosophila melanogaster</i></li>
+                    <li>Performed PCR, gel electrophoresis, plasmid transformation and shotgun cloning</li>
+                    <li>Assisted in routine laboratory management including inventory, culture preparation and flu husbandry</li>
+                </ul>
+            </div>
         </div>
-
-      </section>
-      <!-- end Links -->
-      {% endif %}
-
-      {% if site.resume_print_social_links %}
-      <!-- begin Print Social Links -->
-      <section class="content-section print-only">
-
-        <header class="section-header">
-          <h2>Social Links</h2>
-        </header>
-
-        <div class="resume-item">
-        {% include print-social-links.html %}
+        <!-- Clinical Experience -->
+        <h2>CLINICAL EXPERIENCE</h2>
+        <div class="entry">
+            <div class="entry-header">
+                <div class="entry-title-bold">Clinical Informatics Specialist</div>
+                <div class="entry-date">December 2020 - September 2021</div>
+            </div>
+            <div class="entry-institution">Oak Street Health LaSalle Park, South Bend, Indiana</div>
+            <div class="entry-details">
+                <ul>
+                    <li>Documented patient's medical history, medications, medical management & diagnoses</li>
+                    <li>Performed efficient & precise medical coding compliant with the Centre for Medicare's guidelines</li>
+                    <li>Lead daily team meetings presenting patients to provider and clinical team-members</li>
+                </ul>
+            </div>
         </div>
-
-      </section>
-      <!-- end Print Social Links -->
-      {% endif %}
-
-      <footer class="page-footer">
-        <p class="footer-line">Made by <a href="http://twitter.com/jglovier">@jglovier</a>. Fork me on <a href="https://github.com/jglovier/resume-template">GitHub</a>.</p>
-        <p class="footer-line">If this is your live resume, you can modify or remove this part. ;-)</p>
-      </footer>
-
+        <div class="entry">
+            <div class="entry-header">
+                <div class="entry-title-bold">Medical Registrar & COVID-19 Testing Attendant</div>
+                <div class="entry-date">December 2020 - May 2021</div>
+            </div>
+            <div class="entry-institution">Beacon Health System, Granger & South Bend, Indiana</div>
+            <div class="entry-details">
+                <ul>
+                    <li>Swabbed patients and performed RT-PCR assays on samples to assess for COVID-19</li>
+                    <li>Registered patients in EMRs & charted information</li>
+                    <li>Trained and supervised employees on proper procedures and EMR usage</li>
+                </ul>
+            </div>
+        </div>
+        <div class="entry">
+            <div class="entry-header">
+                <div class="entry-title-bold">Medical Scribe</div>
+                <div class="entry-date">April 2018 - May 2019</div>
+            </div>
+            <div class="entry-institution">Scribe America, Elkhart General Hospital, Elkhart, Indiana</div>
+            <div class="entry-details">
+                <ul>
+                    <li>Documented provider visits for emergency medicine physicians</li>
+                    <li>Incorporated knowledge of pharmaceuticals, medical terminology and pathophysiology</li>
+                    <li>Followed HIPPA guidelines and navigated complex power dynamics and interpersonal relationships</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Public Health Experience -->
+        <h2>PUBLIC HEALTH EXPERIENCE</h2>
+        <div class="entry">
+            <div class="entry-header">
+                <div class="entry-title-bold">Epidemiology & Entomology Intern</div>
+                <div class="entry-date">Summer 2022</div>
+            </div>
+            <div class="entry-institution">Research Center for Infectious and Vector Diseases (CIREV), Quito, Ecuador</div>
+            <div class="entry-details">
+                <ul>
+                    <li>Collected mosquitoes for identification and molecular analysis using HLC & HDN methods</li>
+                    <li>Analyzed data from mosquito collections using R and SAS</li>
+                    <li>Crafted protocols and drafted manuscripts for publication</li>
+                    <li>Assisted in mosquito husbandry associated with a sterile insect release programme</li>
+                </ul>
+            </div>
+        </div>
+        <div class="entry">
+            <div class="entry-header">
+                <div class="entry-title-bold">Environmental & Vector Technician</div>
+                <div class="entry-date">Summer 2019</div>
+            </div>
+            <div class="entry-institution">Elkhart County Environmental Health Department, Goshen, Indiana</div>
+            <div class="entry-details">
+                <ul>
+                    <li>Assessed distribution of mosquitoes & ticks, alongside vector identification and control</li>
+                    <li>Created guide for pesticide use and contraindications</li>
+                    <li>Performed weekly surface-water quality analyses</li>
+                </ul>
+            </div>
+        </div>
+        <div class="entry">
+            <div class="entry-header">
+                <div class="entry-title-bold">Intercultural Intern</div>
+                <div class="entry-date">Fall 2019</div>
+            </div>
+            <div class="entry-institution">Devon Oasis, Little India, Chicago, Illinois</div>
+            <div class="entry-details">
+                <ul>
+                    <li>Provided social support and basic health/nutritional education to incoming refugee families</li>
+                    <li>Developed course materials for TESOL and health education</li>
+                    <li>Supervised homework tutoring sessions and assisted with college applications</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Teaching Experience -->
+        <h2>TEACHING EXPERIENCE</h2>
+        <div class="entry">
+            <div class="entry-title-bold">University of Florida Instructor of Record</div>
+            <div class="teaching-subsection">
+                <div class="teaching-subsection-title">GEO 3452 | Introduction to Medical Geography</div>
+                <ul>
+                    <li>Four semesters, 30-75 students per semester</li>
+                    <li>Managed and led online course, graded all course material, designed course content</li>
+                </ul>
+            </div>
+        </div>
+        <div class="entry">
+            <div class="entry-title-bold">University of Florida Teaching Assistant</div>
+            <div class="teaching-subsection">
+                <div class="teaching-subsection-title">IDS 2935 | The Next Pandemic</div>
+                <ul>
+                    <li>Three semesters, 150-200 students per semester</li>
+                    <li>Graded weekly assignments, quizzes, exams and presentations</li>
+                </ul>
+            </div>
+        </div>
+        <div class="entry">
+            <div class="entry-title-bold">University of Michigan Graduate Student Instructor</div>
+            <div class="teaching-subsection">
+                <div class="teaching-subsection-title">SOC 302 | Health & Society</div>
+                <ul>
+                    <li>Two semesters, 75 students per semester</li>
+                    <li>Lectured on supplementary information, led discussion sections and graded essays</li>
+                </ul>
+            </div>
+        </div>
+        <div class="entry">
+            <div class="entry-title-bold">Bethel University Teaching Assistant & Grader</div>
+            <div class="teaching-subsection">
+                <div class="teaching-subsection-title">BIOL 220 | Clinical Microbiology with Laboratory</div>
+                <ul>
+                    <li>One semester, 2 20-student sections</li>
+                    <li>Prepared media and cultures for procedures, supervised laboratory sessions and graded assignments</li>
+                </ul>
+            </div>
+            <div class="teaching-subsection">
+                <div class="teaching-subsection-title">BIOL 115 | Human Biology with Laboratory</div>
+                <ul>
+                    <li>One semester, 3 25-student sections</li>
+                    <li>Prepared materials and equipment for procedures, supervised laboratory sessions and graded assignments</li>
+                </ul>
+            </div>
+            <div class="teaching-subsection">
+                <div class="teaching-subsection-title">SPAN 161 - 162 | Elementary Spanish I & 2</div>
+                <ul>
+                    <li>Four semesters, 4 20-student sections per semester</li>
+                    <li>Graded weekly quizzes, semester exams and short writing assignments</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Invited Talks -->
+        <h2>INVITED TALKS, TRAININGS & WORKSHOPS</h2>
+        <div class="numbered-section">
+            <div class="publication-item">
+                <strong>Modelling vector ecologies using frameworks from community ecology, geographic sciences and public health</strong> | January 2026, Invited talk, Annual Meeting of the Institute for Infectious Disease Translational Research, University of South Carolina; 2026
+            </div>
+            <div class="publication-item">
+                <strong>Genomic Surveillance and Epidemiological Models for Outbreak Response Workshop</strong> | May 2025, Emerging Pathogens Institute, University of Florida, Gainesville, Florida
+            </div>
+            <div class="publication-item">
+                <strong>Global Health Epidemiology Panel</strong> | EPID 664 - Field Methods in Global Health Epidemiology, January 2023, Department of Epidemiology, University of Michigan, Ann Arbor, Michigan
+            </div>
+        </div>
+        <!-- Scientific Presentations -->
+        <h2>SCIENTIFIC PRESENTATIONS</h2>
+        <div class="numbered-section">        
+          <div class="publication-item">
+              <strong>Pshea-Smith IA</strong>, Kotorashvili A, Kotaria N, Golubiana G, Kirkitadze G, Chunashvili T, Shubashishvili A, Di Paola N, Kugelman J, Hulseberg C, Walker B, Musich T, Cleary NG, Metrailer MC, Reinbold-Wasson D, Denlinger DS, Blackburn JK, von Fricken ME. An ecological analysis of ticks in the country of Georgia using ten years of surveillance data.
+              <span class="presentation-venue">Poster presentation</span>
+              <span class="presentation-venue">Conference of Research Workers in Animal Diseases</span>
+              <span class="presentation-venue">Chicago, Illinois; 2026</span>
+          </div>
+          <div class="publication-item">
+              <strong>Pshea-Smith IA</strong>, Andritsch S, Kotorashvili A, Kotaria N, Golubiana G, Kirkitadze G, Chunashvili T, Shubashishvili A, Di Paola N, Kugelman J, Hulseberg C, Walker B, Musich T, Reinbold-Wasson D, Blackburn JK, von Fricken ME. Species distribution models for <i>Ixodes ricinus</i> and <i>Dermacentor reticulatus</i> in the Republic of Georgia.
+              <span class="presentation-venue">Poster presentation</span>
+              <span class="presentation-venue">Annual meeting of the American Society of Tropical Medicine and Hygiene</span>
+              <span class="presentation-venue">Toronto, Canada; 2025</span>
+          </div>
+          <div class="publication-item">
+              <strong>Pshea-Smith IA</strong>, Okech B, Boncy J, Existe A, Metrailer M, Matulis GA, Blackburn JK, von Fricken ME. Mosquito biodiversity in a pathogen endemic setting in Haiti.
+              <span class="presentation-venue">Poster presentation</span>
+              <span class="presentation-venue">Emerging Pathogens Institute Research Day</span>
+              <span class="presentation-venue">Gainesville, Florida; 2025</span>
+          </div>
+          <div class="publication-item">
+              <strong>Pshea-Smith IA</strong>, Okech B, Sutherland I, Dunford J, So J, Koehler J, Boncy J, Matulis G, Ponciano JM, Blackburn JK, von Fricken ME. Mosquitoes & Haiti: Modelling mosquito distribution and examining mosquito diversity under current and future climate scenarios.
+              <span class="presentation-venue">Oral presentation</span>
+              <span class="presentation-venue">Annual meeting of the American Association of Geographers</span>
+              <span class="presentation-venue">Detroit, Michigan; 2025</span>
+          </div>
+          <div class="publication-item">
+              <strong>Pshea-Smith IA</strong>, Werner E, Dunn M, Bashshur R. Geographic trends of keratitis in Florida and its association with social vulnerability.
+              <span class="presentation-venue">Oral presentation</span>
+              <span class="presentation-venue">Florida Society of Geographers Annual Meeting</span>
+              <span class="presentation-venue">Gainesville, Florida; 2025</span>
+          </div>
+          <div class="publication-item">
+              <strong>Pshea-Smith IA</strong>, Okech B, Sutherland I, Dunford J, So J, Koehler J, Boncy J, Matulis G, Ponciano JM, Blackburn JK, von Fricken ME. Estimating spatial distributions of <i>Aedes aegypti</i>, <i>Aedes albopictus</i> and <i>Culex quinquefasciatus</i> in Haiti using machine learning.
+              <span class="presentation-venue">Poster presentation</span>
+              <span class="presentation-venue">Annual meeting of the American Society of Tropical Medicine and Hygiene</span>
+              <span class="presentation-venue">New Orleans, Louisiana; 2024</span>
+          </div>
+          <div class="publication-item">
+              <strong>Pshea-Smith IA</strong>, Okech B, Sutherland I, Dunford J, So J, Koehler J, Boncy J, Matulis G, Ponciano JM, Blackburn JK, von Fricken ME. Modelling and predicting counts and environmental correlates of <i>Aedes aegypti</i>, <i>Aedes albopictus</i> and <i>Culex quinquefasciatus</i> in Haiti.
+              <span class="presentation-venue">Oral presentation</span>
+              <span class="presentation-venue">International Medical Geography Symposium</span>
+              <span class="presentation-venue">Atlanta, Georgia; 2024</span>
+          </div>
+          <div class="publication-item">
+              <strong>Pshea-Smith IA</strong>, Okech B, Sutherland I, Dunford J, So J, Blackburn JK, von Fricken ME. Spatiotemporal Patterns of Three Mosquito Species in Haiti, 2018-2019.
+              <span class="presentation-venue">Poster presentation</span>
+              <span class="presentation-venue">Emerging Pathogens Institute Research Day 2024</span>
+              <span class="presentation-venue">Gainesville, Florida; 2024</span>
+          </div>
+          <div class="publication-item">
+              <strong>Pshea-Smith IA</strong>, Ponce P, Cevallos V, Carrazco A, Morrison AC, Coloma J, Eisenberg JNS. Determinants of <i>Aedes aegypti</i> & <i>Culex</i> Species Landing Rates in Northern Esmeraldas Province, Ecuador: A Human Landing Catch Study, June 2021 - July 2022.
+              <span class="presentation-venue">Poster presentation</span>
+              <span class="presentation-venue">Annual meeting of the American Society of Tropical Medicine and Hygiene</span>
+              <span class="presentation-venue">Chicago, Illinois; 2023</span>
+          </div>
+        </div>
+        <!-- Scientific Publications -->
+        <h2>SCIENTIFIC PUBLICATIONS</h2>
+        <h3 class="pub-subheading">Published & Accepted</h3>
+        <div class="numbered-section">
+            <div class="publication-item">
+                <strong>Pshea-Smith IA</strong>, Bissainte D, Ash KD. Climate Change, Colonisation, Conflict & Corruption – A vulnerabilising assemblage in the context of infectious disease in Haiti.
+                <span class="publication-status">Accepted, Geoforum, April, 2026</span>
+            </div>
+            <div class="publication-item">
+                Bashshur R, Werner E, <strong>Pshea-Smith IA</strong>, Dunn M. Prevalence and geographic distribution of keratitis in the United States and associated factors.
+                <span class="publication-status">Accepted, Next Research, April, 2026</span>
+            </div>
+            <div class="publication-item">
+                <strong>Pshea-Smith IA</strong>, Okech B, Sutherland I, Dunford J, So J, Koehler J, Boncy J, Matulis G, Ponciano JM, Blackburn JK, von Fricken ME. Modeling counts and environmental correlates of <i>Aedes aegypti</i>, <i>Aedes albopictus</i> and <i>Culex quinquefasciatus</i> in Haiti.
+                <span class="publication-status">Accepted, Journal of the American Society of Tropical Medicine and Hygiene, February, 2026</span>
+            </div>
+            <div class="publication-item">
+                Matulis GA, Smith HP, Hall G, Katich RS, Delp KL, Douglas CE, Williams J, Hirsch S, Kumar R, <strong>Pshea-Smith IA</strong>, Lilak AA, Okech BA, Ricks K, Stefan CP, Existe A, Kugelman JR, Sutherland I, Dunford J, Boncy J, von Fricken ME, Koehler JW. Characterization of arbovirus infections in patients within Haiti by screening discarded malaria rapid diagnostic test cassettes. PLOS Neglected Tropical Diseases. 2026 Mar;20:1-13.
+                <a href="https://doi.org/10.1371/journal.pntd.0014089" target="_blank">https://doi.org/10.1371/journal.pntd.0014089</a>
+            </div>
+            <div class="publication-item">
+                Motes J, Wilson B, <strong>Pshea-Smith IA</strong>, Matulis GA, Bird JT, So J, Boncy J, Sutherland IW, Hamilton T, Dunford J, Scime S, Tarigopula N, Minard-Smith A, Existe A, Koehler JW, Okech BA, von Fricken ME, Blanton J. Molecular detection of insecticide resistance markers in <i>Aedes aegypti</i> (Diptera: Culicidae) populations from Haiti. Journal of Medical Entomology. 2026 Jan;63(1):tjaf195.
+                <a href="https://doi.org/10.1093/jme/tjaf195" target="_blank">https://doi.org/10.1093/jme/tjaf195</a>
+            </div>
+            <div class="publication-item">
+                <strong>Pshea-Smith IA</strong>, Bashshur M, Itani W, Mofrad ZN, Stout E, Bashshur R. Perceptions on Corneal and Eye Donation: Implications for Corneal Donor Programs. Eye Banking and Corneal Transplantation. 2024 Sep 1;3(3):e0029.
+                <a href="https://doi.org/10.1097/ebct.0000000000000029" target="_blank">https://doi.org/10.1097/ebct.0000000000000029</a>
+            </div>
+        </div>
+        
+        <h3 class="pub-subheading">Under Review</h3>
+        <div class="numbered-section">
+            <div class="publication-item">
+                <strong>Pshea-Smith IA</strong>, Ponce P, Cevallos V, Carrazco A, Morrison AC, Coloma J, Eisenberg JNS. Landing patterns of <i>Aedes aegypti</i> & <i>Culex quinquefasciatus</i> in northern Esmeraldas province, Ecuador: Human Landing Catch Study June 2021 - July 2022.
+                <span class="publication-status">Under review, Journal of the American Mosquito Control Association</span>
+            </div>
+            <div class="publication-item">
+                <strong>Pshea-Smith IA</strong>, Kotorashvili A, Kotaria N, Golubiani G, Kirkitadze G, Chunashvili T, Shubashishvili A, Di Paola N, Kugelman J, Hulseberg C, Walker B, Musich T, Cleary N, Metrailer MC, Blanton J, Lynn J, Reinbold-Wasson D, Denlinger DS, Blackburn JK, von Fricken ME. An ecological analysis of ticks in the country of Georgia.
+                <span class="publication-status">Under review, Ticks and Tick-borne Diseases</span>
+                <a href="https://doi.org/10.2139/ssrn.6551591" target="_blank">https://doi.org/10.2139/ssrn.6551591</a>
+            </div>
+            <div class="publication-item">
+                Cleary N, Fiorenzano J, Boldbaatar B, <strong>Pshea-Smith IA</strong>, Altantogtokh D, Lindroth EJ, Davidson S, Poole-Smith BK, Hertz J, Amgalanbayar B, Etobayeva I, Salyer AR, Letizia AG, Ryan SJ, von Fricken ME. Modeling the distributions of <i>Dermacentor nuttalli</i>, <i>Ixodes persulcatus</i>, and <i>Hyalomma asiaticum</i> in Mongolia from 2019-2024.
+                <span class="publication-status">Under review, Ticks and Tick-borne Diseases</span>
+                <a href="https://doi.org/10.2139/ssrn.6327699" target="_blank">https://doi.org/10.2139/ssrn.6327699</a>
+            </div>
+        </div>
+        
+        <h3 class="pub-subheading">In Preparation</h3>
+        <div class="numbered-section">
+            <div class="publication-item">
+                <strong>Pshea-Smith IA</strong>, Okech B, Sutherland I, Dunford J, So J, Boncy J, Existe A, Punch B, Matulis GA, Koehler JW, Blackburn JK, von Fricken ME. The increasing suitability of <i>Aedes aegypti</i> in Haiti under climate change is an issue of global health equity.
+                <span class="publication-status">In preparation</span>
+            </div>
+            <div class="publication-item">
+                <strong>Pshea-Smith IA</strong>, Ash KD, Bashshur R. The Geography of Keratitis in Florida and its Correlation with Social Vulnerability.
+                <span class="publication-status">In preparation</span>
+            </div>
+            <div class="publication-item">
+                <strong>Pshea-Smith IA</strong>, Matulis GA, Metrailer MC, Okech B, So J, Boncy J, Sutherland I, Hamilton T, Dunford J, Blanton J, Existe A, Koehler JW, Blackburn JK, von Fricken ME. Mosquito community ecology in a pathogen endemic setting in Haiti.
+                <span class="publication-status">In preparation</span>
+            </div>
+        </div>
+        <!-- Professional Reports -->
+        <h2>PROFESSIONAL REPORTS & DOCUMENTS</h2>
+        <div class="numbered-section">
+          <div class="publication-item">
+              <strong>Pshea-Smith IA*</strong>, Gardner K*, Harrison T*, Tretyakova S*. Dementia Management and Infectious Disease Prevention in Grenada's Homes for the Aging. 2023. Internal report for Grenada's Ministry of Social & Community Development, Housing and Gender Affairs. *All four authors contributed equally to this report.
+          </div>
+          <div class="publication-item">
+              <strong>Pshea-Smith IA*</strong>, Vyas J*, Fry J*. Long COVID & Health Information in Bexar County. 2023. Internal report for the South-Central Advanced Health Education Center in San Antonio, Texas. *All three authors contributed equally to this report.
+          </div>
+          <div class="publication-item">
+              <strong>Pshea-Smith IA*</strong>, Tretyakova S*, Grandinetti K*, Powers K*, Tanksley A*. Grenada Red Cross Volunteering Policy. 2022. Internal use document for the Grenada Red Cross Society. *All five authors contributed equally to this report.
+          </div>
+          <div class="publication-item">
+              <strong>Pshea-Smith IA</strong>. Elkhart County Pesticide Guide. 2021. Internal use document for the Elkhart County Environmental Health Department.
+          </div>
+        </div>
+        <!-- Professional Memberships -->
+        <h2>PROFESSIONAL MEMBERSHIPS</h2>
+        <div class="publication-item">
+            2025 - Present | Florida Society of Geographers<br>
+            2024 - Present | American Association of Geographers<br>
+            2024 - Present | Society of Vector Ecology<br>
+            2021 - Present | American Society of Tropical Medicine and Hygiene
+        </div>
+        <!-- Fellowships and Awards -->
+        <h2>FELLOWSHIPS & AWARDS</h2>
+        <div class="publication-item">
+            2025 | <strong>College of Liberal Arts and Sciences Travel Award</strong> - University of Florida<br>
+            2025 | <strong>Doctoral Student Poster Presentation Winner</strong> - Emerging Pathogens Research Day<br>
+            2025 | <strong>Distinguished Teaching Award as a Graduate Student</strong> - University of Florida<br>
+            2025 | <strong>Evan Coe Award for Excellence in Medical Geography</strong> - University of Florida<br>
+            2025 | <strong>Student Oral Presentation Winner</strong> - Ann. Meeting of the Florida Society of Geographers<br>
+            2024 | <strong>Student Paper Presentation Winner</strong> - International Medical Geography Symposium<br>
+            2024 | <strong>Evan Coe Medical Geography Travel Award</strong> - University of Florida<br>
+            2023 | <strong>Verena Lighthouse Scholar</strong> - NSF Biology Integration Institute<br>
+            2023 | <strong>Outstanding Commitment to Public Health Practice</strong> - University of Michigan PHAST<br>
+            2022 | <strong>Global Public Health Research Award</strong> - University of Michigan<br>
+            2022 | <strong>Latin American and Caribbean Studies Tinker Fellow</strong> - University of Michigan<br>
+            2020 | <strong>Outstanding Major in International Health</strong> - Bethel University<br>
+            2017-2020 | <strong>Scholar Athlete</strong>, Track & Field - Bethel University
+        </div>
+        <!-- Skills and Interests -->
+        <div class="skills-container">
+            <div class="skills-column">
+                <h2>TECHNICAL SKILLS</h2>
+                <ul class="skills-list">
+                    <li><span class="skill-category">Data Analysis:</span> R, SAS, ArcGIS Pro</li>
+                    <li><span class="skill-category">Microbiology & molecular biology:</span> PCR, electrophoresis, asceptic & sterile technique</li>
+                    <li>Mosquito identification, husbandry for SIT and environmental control</li>
+                    <li>Survey development and deployment, semi-structured and focus group interviewing</li>
+                </ul>
+            </div>
+            <div class="skills-column">
+                <h2>PROFESSIONAL SKILLS</h2>
+                <ul class="skills-list">
+                    <li>Cultural competency & sensitivity</li>
+                    <li>Pedagogy in interdisciplinary fields, lesson plan development and discussion facilitation</li>
+                    <li>Professional Spanish proficiency; beginner French proficiency</li>
+                    <li>Budgeting and project management</li>
+                </ul>
+            </div>
+        </div>
+        <div class="skills-container">
+            <div class="skills-column">
+                <h2>INTERESTS</h2>
+                <h3>Academic</h3>
+                <ul class="skills-list">
+                    <li>Vector ecology</li>
+                    <li>One Health</li>
+                    <li>Public health practice</li>
+                    <li>Spatial analysis + visualization</li>
+                </ul>
+            </div>
+            <div class="skills-column">
+                <h2>&nbsp;</h2>
+                <h3>Personal</h3>
+                <ul class="skills-list">
+                    <li>Long distance running</li>
+                    <li>Kayaking</li>
+                    <li>Science fiction & fantasy books</li>
+                </ul>
+            </div>
+        </div>
     </div>
-
-  </body>
-
+<div class="back-link">
+    <a href="https://ianpsheasmith.github.io">&larr; Back to Main Site</a>
+</div>    
+</body>
 </html>
